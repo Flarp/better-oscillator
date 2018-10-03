@@ -2,13 +2,6 @@ class BetterOscillatorProcessor extends AudioWorkletProcessor {
   constructor() {
     super();
     this.phase = 0;
-    this.type = "sine";
-  }
-  set type(type) {
-    this._type = type;
-  }
-  get type() {
-    return this._type;
   }
   static get parameterDescriptors() {
     return [
