@@ -1,3 +1,5 @@
+const saw = v => v - Math.floor(v);
+
 class BetterOscillatorProcessor extends AudioWorkletProcessor {
   constructor() {
     super();
@@ -34,47 +36,47 @@ class BetterOscillatorProcessor extends AudioWorkletProcessor {
       }
     ];
   }
-  process(input, output, params) {
-    const outlen = output[0][0].length;
-    const freq = params.frequency.length === 1;
-    const phase = params.phase.length === 1;
-    const wave = params.wave.length === 1;
-    const duty = params.duty.length === 1;
-    for (let x = 0; x < outlen; x++) {
-      const main = (params.frequency[freq ? 0 : x] * x) / sampleRate;
-      if (params.wave[wave ? 0 : x] === 0) {
-        output[0][0][x] = Math.sin(
-          (main + this.phase + params.phase[phase ? 0 : x]) * 2 * Math.PI
-        );
-      } else if (params.wave[wave ? 0 : x] === 1) {
-        output[0][0][x] =
-          main +
-          this.phase +
-          params.phase[phase ? 0 : x] -
-          Math.floor(main + this.phase + params.phase[phase ? 0 : x]);
-      } else {
-        const temp =
-          main +
-          this.phase +
-          params.phase[phase ? 0 : x] -
-          Math.floor(main + this.phase + params.phase[phase ? 0 : x]);
-        const temp2 =
-          main +
-          this.phase +
-          params.phase[phase ? 0 : x] +
-          params.duty[duty ? 0 : x] -
-          Math.floor(
-            main +
-              this.phase +
-              params.phase[phase ? 0 : x] +
-              params.duty[duty ? 0 : x]
+  process(input, outputs, params) {
+    for (let z = 0; z < outputs.length; z++) {
+      const out = outputs[z][0];
+      const outlen = out.length;
+      const freq = params.frequency.length === 1;
+      const phase = params.phase.length === 1;
+      const wave = params.wave.length === 1;
+      const duty = params.duty.length === 1;
+      for (let x = 0; x < outlen; x++) {
+        const main = (params.frequency[freq ? 0 : x] * x) / sampleRate;
+        // sine wave made using bulit-in Math.sin
+        if (params.wave[wave ? 0 : x] === 0) {
+          out[x] = Math.sin(
+            (main + this.phase + params.phase[phase ? 0 : x]) * 2 * Math.PI
           );
-        output[0][0][x] = temp - temp2;
+          // sawtooth wave using linear piecewise floor
+        } else if (params.wave[wave ? 0 : x] === 1) {
+          out[x] = saw(main + this.phase + params.phase[phase ? 0 : x]);
+          // pulse wave using difference of phase shifted saws
+        } else if (params.wave[wave ? 0 : x] === 2) {
+          out[x] =
+            saw(main + this.phase + params.phase[phase ? 0 : x]) -
+            saw(
+              main +
+                this.phase +
+                params.phase[phase ? 0 : x] +
+                params.duty[duty ? 0 : x]
+            );
+          // triangle wave using absolute value of amplitude shifted sawtooth wave
+        } else if (params.wave[wave ? 0 : x] === 3) {
+          out[x] =
+            2 *
+            Math.abs(
+              saw(main + this.phase + params.phase[phase ? 0 : x]) - 1 / 2
+            );
+        }
       }
+      this.phase +=
+        (params.frequency[freq ? 0 : outlen - 1] * outlen) / sampleRate;
+      return true;
     }
-    this.phase +=
-      (params.frequency[freq ? 0 : outlen - 1] * outlen) / sampleRate;
-    return true;
   }
 }
 
