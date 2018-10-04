@@ -56,14 +56,8 @@ class BetterOscillatorProcessor extends AudioWorkletProcessor {
           out[x] = saw(main + this.phase + params.phase[phase ? 0 : x]);
           // pulse wave using difference of phase shifted saws
         } else if (params.wave[wave ? 0 : x] === 2) {
-          out[x] =
-            saw(main + this.phase + params.phase[phase ? 0 : x]) -
-            saw(
-              main +
-                this.phase +
-                params.phase[phase ? 0 : x] +
-                params.duty[duty ? 0 : x]
-            );
+          const temp = main + this.phase + params.phase[phase ? 0 : x];
+          out[x] = saw(temp) - saw(temp + params.duty[duty ? 0 : x]);
           // triangle wave using absolute value of amplitude shifted sawtooth wave
         } else if (params.wave[wave ? 0 : x] === 3) {
           out[x] =
@@ -75,6 +69,7 @@ class BetterOscillatorProcessor extends AudioWorkletProcessor {
       }
       this.phase +=
         (params.frequency[freq ? 0 : outlen - 1] * outlen) / sampleRate;
+      //this.phase %= sampleRate;
       return true;
     }
   }
