@@ -27,3 +27,8 @@ Exposes the following parameters:
   * Max: Infinity
   * Default: 0
   * Description: Sets the frequency that the oscillator will [hard sync](https://en.wikipedia.org/wiki/Oscillator_sync#Hard_Sync) to.
+* `duty`:
+ * Min: 0
+ * Max: 1
+ * Default: 0.5
+ * Description: Controls the duty cycle of the current oscillator **ONLY** if it is a pulsewave.
