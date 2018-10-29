@@ -18,12 +18,12 @@ Exposes the following parameters:
     * 2 - sawtooth
     * 3 - sine
 * `phase`:
- * Min: 0
- * Max: Infinity
- * Default: 0
- * Description: Controls the phase offset of the waveform.
+  * Min: 0
+  * Max: Infinity
+  * Default: 0
+  * Description: Controls the phase offset of the waveform.
 * `sync`:
- * Min: 0
- * Max: Infinity
- * Default: 0
- * Description: Sets frequency to which the oscillator will [hard sync](https://en.wikipedia.org/wiki/Oscillator_sync#Hard_Sync) to.
+  * Min: 0
+  * Max: Infinity
+  * Default: 0
+  * Description: Sets frequency to which the oscillator will [hard sync](https://en.wikipedia.org/wiki/Oscillator_sync#Hard_Sync) to.
