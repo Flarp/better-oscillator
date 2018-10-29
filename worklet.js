@@ -28,9 +28,9 @@ class BetterOscillatorProcessor extends AudioWorkletProcessor {
       },
       {
         name: "wave",
-        defaultValue: 0,
+        defaultValue: 3,
         min: 0,
-        max: 2
+        max: 3
       },
       {
         name: "sync",
