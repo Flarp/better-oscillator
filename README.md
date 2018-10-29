@@ -26,4 +26,4 @@ Exposes the following parameters:
   * Min: 0
   * Max: Infinity
   * Default: 0
-  * Description: Sets frequency to which the oscillator will [hard sync](https://en.wikipedia.org/wiki/Oscillator_sync#Hard_Sync) to.
+  * Description: Sets the frequency that the oscillator will [hard sync](https://en.wikipedia.org/wiki/Oscillator_sync#Hard_Sync) to.
