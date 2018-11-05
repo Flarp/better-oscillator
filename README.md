@@ -17,6 +17,7 @@ Exposes the following parameters:
     * 1 - pulse
     * 2 - sawtooth
     * 3 - sine
+    * 4 - noise
 * `phase`:
   * Min: 0
   * Max: Infinity
