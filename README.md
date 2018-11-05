@@ -10,7 +10,7 @@ Exposes the following parameters:
   * Description: Frequency at which the oscillator will vibrate at.
 * `wave`:
   * Min: 0
-  * Max: 3
+  * Max: 4
   * Default: 3
   * Description: Sets the waveform of the oscillator. If the number is not an integer, it will be rounded down.
     * 0 - triangle
