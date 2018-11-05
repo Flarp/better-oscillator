@@ -63,7 +63,7 @@ class BetterOscillatorProcessor extends AudioWorkletProcessor {
         this.prev_sync_phase = this.sync_phase
         const main = (params.frequency[freq ? 0 : x] * (x-back)) / sampleRate;
         // noise
-        if (params.wave[wave ? 0 : x] > 4) {
+        if (params.wave[wave ? 0 : x] >= 4) {
           out[x] = Math.random() 
         } else if (params.wave[wave ? 0 : x] > 3) {
           // sine wave made using bulit-in Math.sin
