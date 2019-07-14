@@ -65,25 +65,25 @@ class BetterOscillatorProcessor extends AudioWorkletProcessor {
         // noise
         if (params.wave[wave ? 0 : x] >= 4) {
           out[x] = Math.random() 
-        } else if (params.wave[wave ? 0 : x] > 3) {
+        } else if (params.wave[wave ? 0 : x] >= 3) {
           // sine wave made using bulit-in Math.sin
           out[x] = Math.sin(
             (main + this.phase + params.phase[phase ? 0 : x]) * 2 * Math.PI
           );
           // sawtooth wave using linear piecewise floor
-        } else if (params.wave[wave ? 0 : x] > 2) {
-          out[x] = saw(main + this.phase + params.phase[phase ? 0 : x]);
+        } else if (params.wave[wave ? 0 : x] >= 2) {
+          out[x] = 2 * saw(main + this.phase + params.phase[phase ? 0 : x]) - 1;
           // pulse wave using difference of phase shifted saws
-        } else if (params.wave[wave ? 0 : x] > 1) {
+        } else if (params.wave[wave ? 0 : x] >= 1) {
           const temp = main + this.phase + params.phase[phase ? 0 : x];
-          out[x] = saw(temp) - saw(temp + params.duty[duty ? 0 : x]);
+          out[x] = 2 * (saw(temp) - saw(temp + params.duty[duty ? 0 : x]));
           // triangle wave using absolute value of amplitude shifted sawtooth wave
         } else if (params.wave[wave ? 0 : x] >= 0) {
           out[x] =
-            2 *
+            4 *
             Math.abs(
               saw(main + this.phase + params.phase[phase ? 0 : x]) - 1 / 2
-            );
+            ) - 1;
         }
         this.prev_sync_phase += 1 / sampleRate;
       }
